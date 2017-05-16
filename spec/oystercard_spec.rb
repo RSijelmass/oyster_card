@@ -47,9 +47,7 @@ describe Oystercard do
       expect{oystercard.touch_in(station)}.to raise_error "Balance below minimum"
     end
 
-    it { is_expected.to respond_to(:touch_in).with(1).argument }
-
-    it 'returns the entry_station when a card is touched in' do
+    it 'sets entry_station to the current station when a card is touched in' do
       oystercard.top_up(FakeFare::MIN_FARE)
       oystercard.touch_in(station)
       expect(oystercard.entry_station).to eq station
@@ -62,5 +60,13 @@ describe Oystercard do
       oystercard.touch_in(station)
       expect{oystercard.touch_out}.to change { oystercard.balance }.by -1
     end
+
+    it 'sets entry_station to nil when card is touched out' do
+      oystercard.top_up(FakeFare::MIN_FARE)
+      oystercard.touch_in(station)
+      oystercard.touch_out
+      expect(oystercard.entry_station).to eq nil
+    end
+
   end
 end
