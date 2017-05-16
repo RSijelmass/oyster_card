@@ -3,6 +3,7 @@ require 'oystercard'
 describe Oystercard do
 
   subject(:oystercard) { described_class.new }
+  before(:each) {stub_const("FakeFare::MIN_FARE", 1)}
 
   describe '#balance' do
     it "returns a value for the balance" do
@@ -25,8 +26,6 @@ describe Oystercard do
 
   describe '#in_journey?' do
 
-    before(:each) {stub_const("FakeFare::MIN_FARE", 1)}
-
     it "initializes oystercards with a default value of 'ready_to_use'" do
       expect(oystercard).not_to be_in_journey
     end
@@ -48,6 +47,14 @@ describe Oystercard do
   describe '#touch_in' do
     it 'should raise an error if the card is touched in without meeting the minimum balance' do
       expect{oystercard.touch_in}.to raise_error "Balance below minimum"
+    end
+  end
+
+  describe '#touch_out' do
+    it 'reduces the balance by the minimum fare on touch out' do
+      oystercard.top_up(FakeFare::MIN_FARE)
+      oystercard.touch_in
+      expect{oystercard.touch_out}.to change { oystercard.balance }.by -1
     end
   end
 end
