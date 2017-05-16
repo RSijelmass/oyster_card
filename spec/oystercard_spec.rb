@@ -55,15 +55,16 @@ describe Oystercard do
   end
 
   describe '#touch_out' do
-    it 'reduces the balance by the minimum fare on touch out' do
+    before(:each) do
       oystercard.top_up(FakeFare::MIN_FARE)
       oystercard.touch_in(station)
+    end
+
+    it 'reduces the balance by the minimum fare on touch out' do
       expect{oystercard.touch_out}.to change { oystercard.balance }.by -1
     end
 
     it 'sets entry_station to nil when card is touched out' do
-      oystercard.top_up(FakeFare::MIN_FARE)
-      oystercard.touch_in(station)
       oystercard.touch_out
       expect(oystercard.entry_station).to eq nil
     end
