@@ -72,15 +72,7 @@ describe Oystercard do
 
     it 'records the last journey in the @journeys array' do
       oystercard.touch_out(station2)
-      expect(oystercard.journeys[-1]).to eq [station, station2]
-    end
-  end
-
-  describe '#journeys' do
-    it { is_expected.to respond_to(:journeys) }
-
-    it 'returns an array of journeys' do
-      expect(oystercard.journeys.class).to eq Array
+      expect(oystercard.journeys[:journey1]).to eq [station, station2]
     end
   end
 

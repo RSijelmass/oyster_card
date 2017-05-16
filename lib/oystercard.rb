@@ -9,7 +9,7 @@ class Oystercard
   def initialize
     @balance = 0
     @entry_station = nil
-    @journeys = Array.new
+    @journeys = Hash.new
   end
 
   def top_up(amount)
@@ -39,7 +39,8 @@ class Oystercard
   end
 
   def record_journey(station1, station2)
-    @journeys << [station1, station2]
+    key = "journey#{journeys.length+1}".to_sym
+    @journeys[key] = [station1, station2]
   end
 
 end
