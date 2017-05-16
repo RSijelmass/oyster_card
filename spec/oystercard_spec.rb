@@ -25,17 +25,18 @@ describe Oystercard do
 
   describe '#in_journey?' do
     it "initializes oystercards with a default value of 'ready_to_use'" do
-      expect(oystercard.in_journey?).to eq false
+      expect(oystercard).not_to be_in_journey
     end
 
     it "shows the oystercard as in_journey after touch_in" do
       oystercard.touch_in
-      expect(oystercard.in_journey?).to eq true
+      expect(oystercard).to be_in_journey
     end
 
     it "shows the oystercard as !in_journey after touch_out" do
+      oystercard.touch_in
       oystercard.touch_out
-      expect(oystercard.in_journey?).to eq false
+      expect(oystercard).not_to be_in_journey
     end
   end
 end
