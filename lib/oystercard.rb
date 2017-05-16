@@ -39,8 +39,7 @@ class Oystercard
   end
 
   def record_journey(station1, station2)
-    key = "journey#{journeys.length+1}".to_sym
-    @journeys[key] = [station1, station2]
+    @journeys["journey#{journeys.length+1}".to_sym] = [station1, station2]
   end
 
 end

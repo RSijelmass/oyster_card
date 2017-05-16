@@ -70,7 +70,7 @@ describe Oystercard do
       expect(oystercard.entry_station).to eq nil
     end
 
-    it 'records the last journey in the @journeys array' do
+    it 'records the last journey in the @journeys hash' do
       oystercard.touch_out(station2)
       expect(oystercard.journeys[:journey1]).to eq [station, station2]
     end
