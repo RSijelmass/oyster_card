@@ -1,4 +1,5 @@
 require_relative 'fare'
+require_relative 'station'
 
 class Oystercard
 
@@ -19,7 +20,7 @@ class Oystercard
     @in_journey
   end
 
-  def touch_in
+  def touch_in(station)
     raise "Balance below minimum" if @balance < Fare::MIN_FARE
     @in_journey = true
   end

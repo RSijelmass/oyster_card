@@ -4,6 +4,7 @@ describe Oystercard do
 
   subject(:oystercard) { described_class.new }
   before(:each) {stub_const("FakeFare::MIN_FARE", 1)}
+  let(:station) { double(:station) }
 
   describe '#balance' do
     it "returns a value for the balance" do
@@ -29,13 +30,13 @@ describe Oystercard do
 
     it "shows the oystercard as in_journey after touch_in" do
       oystercard.top_up(FakeFare::MIN_FARE)
-      oystercard.touch_in
+      oystercard.touch_in(station)
       expect(oystercard).to be_in_journey
     end
 
     it "shows the oystercard as !in_journey after touch_out" do
       oystercard.top_up(FakeFare::MIN_FARE)
-      oystercard.touch_in
+      oystercard.touch_in(station)
       oystercard.touch_out
       expect(oystercard).not_to be_in_journey
     end
@@ -43,14 +44,17 @@ describe Oystercard do
 
   describe '#touch_in' do
     it 'should raise an error if the card is touched in without meeting the minimum balance' do
-      expect{oystercard.touch_in}.to raise_error "Balance below minimum"
+      expect{oystercard.touch_in(station)}.to raise_error "Balance below minimum"
     end
+
+    it { is_expected.to respond_to(:touch_in).with(1).argument }
+
   end
 
   describe '#touch_out' do
     it 'reduces the balance by the minimum fare on touch out' do
       oystercard.top_up(FakeFare::MIN_FARE)
-      oystercard.touch_in
+      oystercard.touch_in(station)
       expect{oystercard.touch_out}.to change { oystercard.balance }.by -1
     end
   end
