@@ -18,7 +18,11 @@ oystercard.balance
 oystercard.top_up(10)
 
 # 4 allows fare to be deducted
-oystercard.deduct_fare(10)
+oystercard.deduct_fare(5)
 
 # 5 allows oystercard to touch_in
 oystercard.touch_in
+
+# 6 allows touch_in minimum balance is £1
+oystercard.deduct_fare(5)
+oystercard.touch_in # should raise_error

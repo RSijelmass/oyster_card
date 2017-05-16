@@ -39,4 +39,10 @@ describe Oystercard do
       expect(oystercard).not_to be_in_journey
     end
   end
+
+  describe '#touch_in' do
+    it 'should raise an error if the card is touched in without meeting the minimum balance' do
+      expect{oystercard.touch_in}.to raise_error "Balance below minimum"
+    end
+  end
 end
