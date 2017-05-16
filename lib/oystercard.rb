@@ -3,12 +3,13 @@ require_relative 'station'
 
 class Oystercard
 
-  attr_reader :balance
+  attr_reader :balance, :entry_station
   Maximum_balance = 90
 
   def initialize
     @balance = 0
     @in_journey = false
+    @entry_station = nil
   end
 
   def top_up(amount)
@@ -23,6 +24,7 @@ class Oystercard
   def touch_in(station)
     raise "Balance below minimum" if @balance < Fare::MIN_FARE
     @in_journey = true
+    @entry_station = station
   end
 
   def touch_out

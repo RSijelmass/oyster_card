@@ -49,6 +49,11 @@ describe Oystercard do
 
     it { is_expected.to respond_to(:touch_in).with(1).argument }
 
+    it 'returns the entry_station when a card is touched in' do
+      oystercard.top_up(FakeFare::MIN_FARE)
+      oystercard.touch_in(station)
+      expect(oystercard.entry_station).to eq station
+    end
   end
 
   describe '#touch_out' do
