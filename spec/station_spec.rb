@@ -9,7 +9,11 @@ describe Station do
     it { is_expected.to respond_to(:zone) }
 
     it "calls station.name" do
-      expect(!!station.name).to eq true
+      expect(station.name).to eq :name
+    end
+
+    it "calls station.zone" do
+      expect(station.zone).to eq :zone
     end
 
 end
