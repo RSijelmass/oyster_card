@@ -9,6 +9,7 @@ class Oystercard
   def initialize
     @balance = 0
     @entry_station = nil
+    @journeys = Array.new
   end
 
   def top_up(amount)

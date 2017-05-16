@@ -72,6 +72,10 @@ describe Oystercard do
 
   describe '#journeys' do
     it { is_expected.to respond_to(:journeys) }
+
+    it 'returns an array of journeys' do
+      expect(oystercard.journeys.class).to eq Array
+    end
   end
 
 end
