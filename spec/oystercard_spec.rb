@@ -37,7 +37,7 @@ describe Oystercard do
     it "shows the oystercard as !in_journey after touch_out" do
       oystercard.top_up(FakeFare::MIN_FARE)
       oystercard.touch_in(station)
-      oystercard.touch_out
+      oystercard.touch_out(station)
       expect(oystercard).not_to be_in_journey
     end
   end
@@ -61,11 +61,11 @@ describe Oystercard do
     end
 
     it 'reduces the balance by the minimum fare on touch out' do
-      expect{oystercard.touch_out}.to change { oystercard.balance }.by -1
+      expect{oystercard.touch_out(station)}.to change { oystercard.balance }.by -1
     end
 
     it 'sets entry_station to nil when card is touched out' do
-      oystercard.touch_out
+      oystercard.touch_out(station)
       expect(oystercard.entry_station).to eq nil
     end
   end
