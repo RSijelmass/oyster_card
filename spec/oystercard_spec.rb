@@ -5,6 +5,7 @@ describe Oystercard do
   subject(:oystercard) { described_class.new }
   before(:each) {stub_const("FakeFare::MIN_FARE", 1)}
   let(:station) { double(:station) }
+  let(:station2) { double(:station2) }
 
   describe '#balance' do
     it "returns a value for the balance" do
@@ -67,6 +68,11 @@ describe Oystercard do
     it 'sets entry_station to nil when card is touched out' do
       oystercard.touch_out(station)
       expect(oystercard.entry_station).to eq nil
+    end
+
+    it 'records the last journey in the @journeys array' do
+      oystercard.touch_out(station2)
+      expect(oystercard.journeys[-1]).to eq [station, station2]
     end
   end
 
