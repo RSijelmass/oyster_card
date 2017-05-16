@@ -24,25 +24,30 @@ describe Oystercard do
   end
 
   describe '#in_journey?' do
+
+    before(:each) {stub_const("FakeFare::MIN_FARE", 1)}
+
     it "initializes oystercards with a default value of 'ready_to_use'" do
       expect(oystercard).not_to be_in_journey
     end
 
     it "shows the oystercard as in_journey after touch_in" do
+      oystercard.top_up(FakeFare::MIN_FARE)
       oystercard.touch_in
       expect(oystercard).to be_in_journey
     end
 
     it "shows the oystercard as !in_journey after touch_out" do
+      oystercard.top_up(FakeFare::MIN_FARE)
       oystercard.touch_in
       oystercard.touch_out
       expect(oystercard).not_to be_in_journey
     end
   end
 
-  # describe '#touch_in' do
-  #   it 'should raise an error if the card is touched in without meeting the minimum balance' do
-  #     expect{oystercard.touch_in}.to raise_error "Balance below minimum"
-  #   end
-  # end
+  describe '#touch_in' do
+    it 'should raise an error if the card is touched in without meeting the minimum balance' do
+      expect{oystercard.touch_in}.to raise_error "Balance below minimum"
+    end
+  end
 end

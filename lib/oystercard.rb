@@ -1,3 +1,5 @@
+require_relative 'fare'
+
 class Oystercard
 
   attr_reader :balance
@@ -22,7 +24,7 @@ class Oystercard
   end
 
   def touch_in
-    # raise "Balance below minimum" if @balance <= fare.minimum_fare
+    raise "Balance below minimum" if @balance < Fare::MIN_FARE
     @in_journey = true
   end
 
