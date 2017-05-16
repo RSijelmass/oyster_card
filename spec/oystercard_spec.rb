@@ -68,6 +68,10 @@ describe Oystercard do
       oystercard.touch_out
       expect(oystercard.entry_station).to eq nil
     end
-
   end
+
+  describe '#journeys' do
+    it { is_expected.to respond_to(:journeys) }
+  end
+
 end
