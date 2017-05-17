@@ -49,10 +49,11 @@ describe Oystercard do
       expect{oystercard.touch_in(station)}.to raise_error "Balance below minimum"
     end
 
-    it 'sets entry_station to the current station when a card is touched in' do
+    it 'saves journey with correct entry_station in @journeys when a card is touched in' do
       oystercard.top_up(FakeFare::MIN_FARE)
+      station = Station.new("Liverpool Street",1)
       oystercard.touch_in(station)
-      expect(oystercard.entry_station).to eq station
+      expect(oystercard.journeys[-1].entry_station).to eq station
     end
   end
 
@@ -66,15 +67,15 @@ describe Oystercard do
       expect{oystercard.touch_out(station)}.to change { oystercard.balance }.by -1
     end
 
-    it 'sets entry_station to nil when card is touched out' do
-      oystercard.touch_out(station)
-      expect(oystercard.entry_station).to eq nil
+    it 'updates journeys with correct exit_station when card is touched out' do
+      oystercard.top_up(FakeFare::MIN_FARE)
+      station1 = Station.new("Liverpool Street",1)
+      oystercard.touch_in(station1)
+      station2 = Station.new("Acton",4)
+      oystercard.touch_out(station2)
+      expect(oystercard.journeys[-1].exit_station).to eq station2
     end
 
-    it 'records the last journey in the @journeys hash' do
-      oystercard.touch_out(station2)
-      expect(oystercard.journeys[:journey1]).to eq [station, station2]
-    end
   end
 
 end

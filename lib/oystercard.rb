@@ -32,7 +32,6 @@ class Oystercard
     deduct_fare(Fare::MIN_FARE)
     @journeys[-1].end_journey(exit_station)
     self
-    # record_journey(entry_station, exit_station)
   end
 
   private
