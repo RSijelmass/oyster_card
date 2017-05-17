@@ -4,7 +4,7 @@ require_relative 'station'
 class Oystercard
 
   attr_reader :balance, :entry_station, :journeys
-  Maximum_balance = 90
+  MAX_BALANCE = 90
 
   def initialize
     @balance = 0
@@ -13,7 +13,7 @@ class Oystercard
   end
 
   def top_up(amount)
-    fail "Cannot top_up above #{Maximum_balance}" if amount + @balance > Maximum_balance
+    fail "Cannot top_up above #{MAX_BALANCE}" if amount + @balance > MAX_BALANCE
     @balance += amount
   end
 
@@ -22,7 +22,7 @@ class Oystercard
   end
 
   def touch_in(station)
-    raise "Balance below minimum" if @balance < Fare::MIN_FARE
+    fail "Balance below minimum" if @balance < Fare::MIN_FARE
     @entry_station = station
   end
 
