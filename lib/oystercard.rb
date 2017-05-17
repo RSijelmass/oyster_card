@@ -1,5 +1,6 @@
 require_relative 'fare'
 require_relative 'station'
+require_relative 'journey'
 
 class Oystercard
 
@@ -8,8 +9,7 @@ class Oystercard
 
   def initialize
     @balance = 0
-    @entry_station = nil
-    @journeys = Hash.new
+    @journeys = []
   end
 
   def top_up(amount)
@@ -18,18 +18,18 @@ class Oystercard
   end
 
   def in_journey?
-    @entry_station != nil
+    return false if @journeys.empty?
+    @journeys[-1].entry_station != :no_station && @journeys[-1].exit_station == :no_station
   end
 
   def touch_in(station)
     fail "Balance below minimum" if @balance < Fare::MIN_FARE
-    @entry_station = station
+    @journeys << Journey.new.start_journey(station)
   end
 
   def touch_out(exit_station)
     deduct_fare(Fare::MIN_FARE)
     record_journey(entry_station, exit_station)
-    @entry_station = nil
   end
 
   private

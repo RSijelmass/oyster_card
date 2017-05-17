@@ -25,7 +25,7 @@ describe Oystercard do
 
   describe '#in_journey?' do
 
-    it "initializes oystercards with a default value of 'ready_to_use'" do
+    it "initializes oystercards with an empty journeys array" do
       expect(oystercard).not_to be_in_journey
     end
 

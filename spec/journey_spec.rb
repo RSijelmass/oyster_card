@@ -13,5 +13,8 @@ describe Journey do
     expect(journey1.exit_station).to eq "Liverpool Street"
   end
 
+  it "responds #start_journey" do
+    expect(journey).to respond_to(:start_journey).with(1).argument
+  end
 
 end
