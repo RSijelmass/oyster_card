@@ -31,6 +31,7 @@ describe Oystercard do
 
     it "shows the oystercard as in_journey after touch_in" do
       oystercard.top_up(FakeFare::MIN_FARE)
+      station = Station.new("Liverpool Street",1)
       oystercard.touch_in(station)
       expect(oystercard).to be_in_journey
     end

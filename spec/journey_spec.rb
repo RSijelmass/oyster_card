@@ -17,4 +17,8 @@ describe Journey do
     expect(journey).to respond_to(:start_journey).with(1).argument
   end
 
+  it "responds #end_journey" do
+    expect(journey).to respond_to(:end_journey).with(1).argument
+  end
+
 end

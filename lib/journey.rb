@@ -6,8 +6,14 @@ class Journey
     @exit_station = exit_station
   end
 
-  def start_journey(entry_station)
+  def start_journey(station)
+    @entry_station = station
+    self
   end
 
+  def end_journey(station)
+    @exit_station = station
+    self
+  end
 
 end

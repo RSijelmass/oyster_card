@@ -4,7 +4,7 @@ require_relative 'journey'
 
 class Oystercard
 
-  attr_reader :balance, :entry_station, :journeys
+  attr_reader :balance, :journeys
   MAX_BALANCE = 90
 
   def initialize
