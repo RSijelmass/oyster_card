@@ -25,11 +25,14 @@ class Oystercard
   def touch_in(station)
     fail "Balance below minimum" if @balance < Fare::MIN_FARE
     @journeys << Journey.new.start_journey(station)
+    self
   end
 
   def touch_out(exit_station)
     deduct_fare(Fare::MIN_FARE)
-    record_journey(entry_station, exit_station)
+    @journeys[-1].end_journey(exit_station)
+    self
+    # record_journey(entry_station, exit_station)
   end
 
   private
