@@ -29,8 +29,8 @@ class Oystercard
   end
 
   def touch_out(exit_station)
-    deduct_fare(Fare::MIN_FARE)
     @journeys[-1].end_journey(exit_station)
+    deduct_fare(Fare::MIN_FARE)
     self
   end
 
@@ -38,10 +38,6 @@ class Oystercard
 
   def deduct_fare(fare)
     @balance -= fare
-  end
-
-  def record_journey(station1, station2)
-    @journeys["journey#{journeys.length+1}".to_sym] = [station1, station2]
   end
 
 end

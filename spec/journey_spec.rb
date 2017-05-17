@@ -21,4 +21,9 @@ describe Journey do
     expect(journey).to respond_to(:end_journey).with(1).argument
   end
 
+  it "responds #calculate_fare" do
+    expect(journey).to respond_to(:calculate_fare)
+  end
+
+
 end

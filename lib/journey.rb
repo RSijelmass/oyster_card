@@ -16,4 +16,7 @@ class Journey
     self
   end
 
+  def calculate_fare
+  end
+
 end
