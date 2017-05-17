@@ -8,5 +8,10 @@ describe Journey do
     expect(journey1.entry_station).to eq "Brixton"
   end
 
+  it "has an exit_station" do
+    journey1 = Journey.new("Brixton","Liverpool Street")
+    expect(journey1.exit_station).to eq "Liverpool Street"
+  end
+
 
 end
