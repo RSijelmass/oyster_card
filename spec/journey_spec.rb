@@ -25,5 +25,8 @@ describe Journey do
     expect(journey).to respond_to(:calculate_fare)
   end
 
+  it "returns MIN_FARE" do
+    expect(journey.calculate_fare).to eq Fare::MIN_FARE
+  end
 
 end

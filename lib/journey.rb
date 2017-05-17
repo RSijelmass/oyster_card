@@ -17,6 +17,7 @@ class Journey
   end
 
   def calculate_fare
+    Fare::MIN_FARE
   end
 
 end
