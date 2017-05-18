@@ -25,17 +25,13 @@ class Oystercard
 
   def touch_in(station)
     check_minimum_balance
-    @journeys << Journey.new.start_journey(station)
-    @started = true
+    updates_begin_journey(station)
     self
   end
 
-  def touch_out(exit_station)
-    if @journeys.empty? || !@started
-      @journeys << Journey.new.start_journey(:no_station)
-    end
-    @journeys[-1].end_journey(exit_station)
-    @started = false
+  def touch_out(station)
+    @journeys << Journey.new.start_journey(:no_station) if !@started
+    updates_end_journey(station)
     deduct_fare(@journeys[-1].calculate_fare)
     self
   end
@@ -54,4 +50,13 @@ class Oystercard
     fail "Cannot top_up above #{MAX_BALANCE}" if amount + @balance > MAX_BALANCE
   end
 
+  def updates_end_journey(station)
+    @journeys[-1].end_journey(station)
+    @started = false
+  end
+
+  def updates_begin_journey(station)
+    @journeys << Journey.new.start_journey(station)
+    @started = true
+  end
 end
