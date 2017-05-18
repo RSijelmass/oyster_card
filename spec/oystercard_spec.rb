@@ -76,6 +76,11 @@ describe Oystercard do
       expect(oystercard.journeys[-1].exit_station).to eq station2
     end
 
+    it "forgetting to touch in, #touch_out creates a new journey" do
+      oystercard.touch_out(station)
+      expect(oystercard.journeys).not_to be_empty
+    end
+
   end
 
 end
