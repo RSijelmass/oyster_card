@@ -19,13 +19,8 @@ class Oystercard
     @balance += amount
   end
 
-  def in_journey?
-    return false if @journey_log.journeys.empty?
-    @journey_log.journeys[-1].entry_station != :no_station && @journey_log.journeys[-1].exit_station == :no_station
-  end
-
   def touch_in(station)
-    deduct_fare(@journey_log.journeys[-1].calculate_fare) if in_journey?
+    deduct_fare(@journey_log.journeys[-1].calculate_fare) if @journey_log.started
     check_minimum_balance
     @journey_log.start(station)
     self

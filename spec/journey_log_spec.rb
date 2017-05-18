@@ -10,6 +10,10 @@ describe JourneyLog do
     it 'starts a new journey' do
       expect{journeylog.start(station)}.to change{ journeylog.journeys.length }.by 1
     end
+
+    it 'changes @started to true' do
+      expect{journeylog.start(station)}.to change{journeylog.started}.to true
+    end
   end
 
   describe '#finish' do
@@ -22,6 +26,11 @@ describe JourneyLog do
 
     it 'creates a new journey in case we only touch out' do
       expect{journeylog.finish(station)}.to change{ journeylog.journeys.length }.by 1
+    end
+
+    it 'changes @started to false' do
+      journeylog.start(station)
+      expect{journeylog.finish(station)}.to change{journeylog.started}.to false
     end
   end
 

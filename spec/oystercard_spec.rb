@@ -23,27 +23,6 @@ describe Oystercard do
 
   end
 
-  describe '#in_journey?' do
-
-    it "initializes oystercards with an empty journeys array" do
-      expect(oystercard).not_to be_in_journey
-    end
-
-    it "shows the oystercard as in_journey after touch_in" do
-      oystercard.top_up(FakeFare::MIN_FARE)
-      station = Station.new("Liverpool Street",1)
-      oystercard.touch_in(station)
-      expect(oystercard).to be_in_journey
-    end
-
-    it "shows the oystercard as !in_journey after touch_out" do
-      oystercard.top_up(FakeFare::MIN_FARE)
-      oystercard.touch_in(station)
-      oystercard.touch_out(station)
-      expect(oystercard).not_to be_in_journey
-    end
-  end
-
   describe '#touch_in' do
     it 'should raise an error if the card is touched in without meeting the minimum balance' do
       expect{oystercard.touch_in(station)}.to raise_error "Balance below minimum"

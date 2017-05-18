@@ -1,6 +1,6 @@
 class JourneyLog
 
-  attr_reader :journeys
+  attr_reader :journeys, :started
 
   def initialize
     @journeys = []
