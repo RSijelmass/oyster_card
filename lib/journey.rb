@@ -17,11 +17,7 @@ class Journey
   end
 
   def calculate_fare
-    if !complete?
-      Fare::PENALTY_FARE
-    else
-      Fare::MIN_FARE
-    end
+    complete? ? Fare::MIN_FARE : Fare::PENALTY_FARE
   end
 
   private

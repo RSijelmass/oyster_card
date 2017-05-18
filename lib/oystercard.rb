@@ -4,13 +4,12 @@ require_relative 'journey'
 
 class Oystercard
 
-  attr_reader :balance, :journeys, :started
+  attr_reader :balance, :journeys
   MAX_BALANCE = 90
 
   def initialize
     @balance = 0
     @journeys = []
-    @started = false
   end
 
   def top_up(amount)
@@ -24,14 +23,14 @@ class Oystercard
   end
 
   def touch_in(station)
-    deduct_fare(@journeys[-1].calculate_fare) if @started
+    deduct_fare(@journeys[-1].calculate_fare) if in_journey?
     check_minimum_balance
     updates_begin_journey(station)
     self
   end
 
   def touch_out(station)
-    @journeys << Journey.new.start_journey(:no_station) if !@started
+    add_journey(:no_station) unless in_journey?
     updates_end_journey(station)
     deduct_fare(@journeys[-1].calculate_fare)
     self
@@ -53,11 +52,13 @@ class Oystercard
 
   def updates_end_journey(station)
     @journeys[-1].end_journey(station)
-    @started = false
   end
 
   def updates_begin_journey(station)
+    add_journey(station)
+  end
+
+  def add_journey(station)
     @journeys << Journey.new.start_journey(station)
-    @started = true
   end
 end
