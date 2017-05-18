@@ -5,12 +5,13 @@ require_relative 'journey_log'
 
 class Oystercard
 
-  attr_reader :balance, :journeys
+  attr_reader :balance, :journeys, :journey_log
   MAX_BALANCE = 90
 
   def initialize
     @balance = 0
     @journeys = []
+    @journey_log = JourneyLog.new
   end
 
   def top_up(amount)
@@ -19,21 +20,20 @@ class Oystercard
   end
 
   def in_journey?
-    return false if @journeys.empty?
-    @journeys[-1].entry_station != :no_station && @journeys[-1].exit_station == :no_station
+    return false if @journey_log.journeys.empty?
+    @journey_log.journeys[-1].entry_station != :no_station && @journey_log.journeys[-1].exit_station == :no_station
   end
 
   def touch_in(station)
-    deduct_fare(@journeys[-1].calculate_fare) if in_journey?
+    deduct_fare(@journey_log.journeys[-1].calculate_fare) if in_journey?
     check_minimum_balance
-    add_journey(station)
+    @journey_log.start(station)
     self
   end
 
   def touch_out(station)
-    add_journey(:no_station) unless in_journey?
-    updates_end_journey(station)
-    deduct_fare(@journeys[-1].calculate_fare)
+    @journey_log.finish(station)
+    deduct_fare(@journey_log.journeys[-1].calculate_fare)
     self
   end
 
@@ -51,11 +51,4 @@ class Oystercard
     fail "Cannot top_up above #{MAX_BALANCE}" if amount + @balance > MAX_BALANCE
   end
 
-  def updates_end_journey(station)
-    @journeys[-1].end_journey(station)
-  end
-
-  def add_journey(station)
-    @journeys << Journey.new.start_journey(station)
-  end
 end

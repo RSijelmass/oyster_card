@@ -53,14 +53,14 @@ describe Oystercard do
       oystercard.top_up(FakeFare::MIN_FARE)
       station = Station.new("Liverpool Street",1)
       oystercard.touch_in(station)
-      expect(oystercard.journeys[-1].entry_station).to eq station
+      expect(oystercard.journey_log.journeys[-1].entry_station).to eq station
     end
 
     it 'forgetting to touch out, #touch_in creates a new journey' do
       oystercard.top_up(described_class::MAX_BALANCE)
       oystercard.touch_in(station)
       oystercard.touch_in(station2)
-      expect(oystercard.journeys.length).to eq 2
+      expect(oystercard.journey_log.journeys.length).to eq 2
     end
 
     it 'deducts penalty fare if forgot to #touch_out' do
@@ -86,12 +86,12 @@ describe Oystercard do
       oystercard.touch_in(station1)
       station2 = Station.new("Acton",4)
       oystercard.touch_out(station2)
-      expect(oystercard.journeys[-1].exit_station).to eq station2
+      expect(oystercard.journey_log.journeys[-1].exit_station).to eq station2
     end
 
     it "forgetting to touch in, #touch_out creates a new journey" do
       oystercard.touch_out(station)
-      expect(oystercard.journeys).not_to be_empty
+      expect(oystercard.journey_log.journeys).not_to be_empty
     end
 
   end
