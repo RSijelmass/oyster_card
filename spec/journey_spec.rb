@@ -25,18 +25,7 @@ describe Journey do
     expect(journey).to respond_to(:calculate_fare)
   end
 
-  it "returns MIN_FARE" do
-    expect(journey.calculate_fare).to eq Fare::MIN_FARE
-  end
-
-  it "returns false if journey is incomplete" do
-    journey.start_journey("A")
-    expect(journey.complete?).to eq false
-  end
-
-  it "returns true if journey is complete" do
-    journey.start_journey("A")
-    journey.end_journey("B")
-    expect(journey.complete?).to eq true
+  it "returns penalty fare if journey is incomplete" do
+    expect(journey.calculate_fare).to eq Fare::PENALTY_FARE
   end
 end

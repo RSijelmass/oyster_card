@@ -17,11 +17,17 @@ class Journey
   end
 
   def calculate_fare
-    Fare::MIN_FARE
+    if !complete?
+      Fare::PENALTY_FARE
+    else
+      Fare::MIN_FARE
+    end
   end
 
+  private
+
   def complete?
-    @entry_station != :no_station && @exit_station != :no_station
+    @entry_station != :no_station || @exit_station != :no_station
   end
 
 end
