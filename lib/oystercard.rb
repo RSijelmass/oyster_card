@@ -24,6 +24,7 @@ class Oystercard
   end
 
   def touch_in(station)
+    deduct_fare(@journeys[-1].calculate_fare) if @started
     check_minimum_balance
     updates_begin_journey(station)
     self

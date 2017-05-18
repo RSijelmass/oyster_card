@@ -3,7 +3,7 @@ require 'oystercard'
 describe Oystercard do
 
   subject(:oystercard) { described_class.new }
-  before(:each) {stub_const("FakeFare::MIN_FARE", 1)}
+  before(:each) { stub_const("FakeFare::MIN_FARE", 1) }
   let(:station) { double(:station) }
   let(:station2) { double(:station2) }
 
@@ -57,10 +57,16 @@ describe Oystercard do
     end
 
     it 'forgetting to touch out, #touch_in creates a new journey' do
-      oystercard.top_up(FakeFare::MIN_FARE * 2)
+      oystercard.top_up(described_class::MAX_BALANCE)
       oystercard.touch_in(station)
       oystercard.touch_in(station2)
       expect(oystercard.journeys.length).to eq 2
+    end
+
+    it 'deducts penalty fare if forgot to #touch_out' do
+      oystercard.top_up(described_class::MAX_BALANCE)
+      oystercard.touch_in(station)
+      expect{ oystercard.touch_in(station2) }.to change { oystercard.balance }.by -6
     end
   end
 
@@ -70,6 +76,7 @@ describe Oystercard do
     end
 
     it 'reduces the balance by the minimum fare on touch out' do
+      oystercard.touch_in(station2)
       expect{oystercard.touch_out(station)}.to change { oystercard.balance }.by -1
     end
 
