@@ -13,7 +13,7 @@ class Oystercard
   end
 
   def top_up(amount)
-    fail "Cannot top_up above #{MAX_BALANCE}" if amount + @balance > MAX_BALANCE
+    check_maximum_balance(amount)
     @balance += amount
   end
 
@@ -23,7 +23,7 @@ class Oystercard
   end
 
   def touch_in(station)
-    fail "Balance below minimum" if @balance < Fare::MIN_FARE
+    check_minimum_balance
     @journeys << Journey.new.start_journey(station)
     self
   end
@@ -31,7 +31,6 @@ class Oystercard
   def touch_out(exit_station)
     @journeys[-1].end_journey(exit_station)
     deduct_fare(@journeys[-1].calculate_fare)
-    # deduct_fare(Fare::MIN_FARE)
     self
   end
 
@@ -39,6 +38,14 @@ class Oystercard
 
   def deduct_fare(fare)
     @balance -= fare
+  end
+
+  def check_minimum_balance
+    fail "Balance below minimum" if @balance < Fare::MIN_FARE
+  end
+
+  def check_maximum_balance(amount)
+    fail "Cannot top_up above #{MAX_BALANCE}" if amount + @balance > MAX_BALANCE
   end
 
 end
