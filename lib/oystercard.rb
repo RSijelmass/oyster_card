@@ -1,6 +1,7 @@
 require_relative 'fare'
 require_relative 'station'
 require_relative 'journey'
+require_relative 'journey_log'
 
 class Oystercard
 
@@ -25,7 +26,7 @@ class Oystercard
   def touch_in(station)
     deduct_fare(@journeys[-1].calculate_fare) if in_journey?
     check_minimum_balance
-    updates_begin_journey(station)
+    add_journey(station)
     self
   end
 
@@ -52,10 +53,6 @@ class Oystercard
 
   def updates_end_journey(station)
     @journeys[-1].end_journey(station)
-  end
-
-  def updates_begin_journey(station)
-    add_journey(station)
   end
 
   def add_journey(station)
