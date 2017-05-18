@@ -55,12 +55,18 @@ describe Oystercard do
       oystercard.touch_in(station)
       expect(oystercard.journeys[-1].entry_station).to eq station
     end
+
+    it 'forgetting to touch out, #touch_in creates a new journey' do
+      oystercard.top_up(FakeFare::MIN_FARE * 2)
+      oystercard.touch_in(station)
+      oystercard.touch_in(station2)
+      expect(oystercard.journeys.length).to eq 2
+    end
   end
 
   describe '#touch_out' do
     before(:each) do
       oystercard.top_up(FakeFare::MIN_FARE)
-      oystercard.touch_in(station)
     end
 
     it 'reduces the balance by the minimum fare on touch out' do
