@@ -20,4 +20,8 @@ class Journey
     Fare::MIN_FARE
   end
 
+  def complete?
+    
+  end
+
 end
