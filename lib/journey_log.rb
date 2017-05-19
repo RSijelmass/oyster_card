@@ -1,34 +1,42 @@
+
 require_relative 'journey'
 
+# This records journeys and allows indirect interaction between an OysterCard
+# and a Journey
 class JourneyLog
-
   attr_reader :started
 
   def initialize(journey_class)
     @journey_class = journey_class
-    @journeys = []
-    @current_journey = nil
+    @journey_history = []
+    @journey = nil
     @started = false
   end
 
   def start(station)
-    @current_journey = @journey_class.new.start_journey(station)
-    @journeys << @current_journey
+    @journey = @journey_class.new.start_journey(station)
+    @journey_history << @journey
     @started = true
   end
 
   def finish(station)
     start(nil) unless @started
-    @current_journey.end_journey(station)
+    @journey.end_journey(station)
     @started = false
   end
 
   def calculate_fare
-    @current_journey.complete? ? Journey::MIN_FARE : Journey::PENALTY_FARE
+    return Journey::PENALTY_FARE unless @journey.complete?
+    Journey::MIN_FARE + distance_travelled
   end
 
   def journeys
-    @journeys.dup
+    @journey_history.dup
   end
 
+  private
+
+  def distance_travelled
+    (@journey.entry_station.zone - @journey.exit_station.zone).abs
+  end
 end

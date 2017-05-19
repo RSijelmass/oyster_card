@@ -15,20 +15,6 @@ describe JourneyLog do
       expect{journeylog.start(station)}.to change{ journeylog.journeys.length }.by 1
     end
 
-  end
-
-  # describe '#finish' do
-  #   it 'finishes a current journey' do
-  #     # not using proper doubles
-  #     journeylog.start(station)
-  #     journeylog.finish(station2)
-  #     expect(journeylog.journeys[-1].exit_station).to eq station2
-  #   end
-  #
-  #   it 'creates a new journey in case we only touch out' do
-  #     expect{journeylog.finish(station)}.to change{ journeylog.journeys.length }.by 1
-  #   end
-
-  # end
+    end
 
 end

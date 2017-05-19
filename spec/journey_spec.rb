@@ -4,7 +4,7 @@ describe Journey do
   subject(:journey) { described_class.new }
 
   it 'has an entry_station' do
-    journey1 = Journey.new(entry_station:'Brixton')
+    journey1 = Journey.new(entry_station: 'Brixton')
     expect(journey1.entry_station).to eq 'Brixton'
   end
 

@@ -1,3 +1,5 @@
+
+# This represents a journey
 class Journey
   attr_reader :entry_station, :exit_station
 
@@ -22,5 +24,4 @@ class Journey
   def complete?
     !@entry_station.nil? && !@exit_station.nil?
   end
-
 end
