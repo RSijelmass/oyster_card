@@ -1,6 +1,6 @@
 require 'oystercard'
 
-describe Oystercard do
+describe OysterCard do
 
   subject(:oystercard) { described_class.new(20) }
   # before(:each) { stub_const("FakeFare::MIN_FARE", 1) }
@@ -12,7 +12,7 @@ describe Oystercard do
 
   describe '#balance' do
     it 'returns a value for the balance' do
-      expect(Oystercard.new.balance).to be_zero
+      expect(OysterCard.new.balance).to be_zero
     end
 
     it 'Increases the balance when top_up is called' do
@@ -21,13 +21,13 @@ describe Oystercard do
     end
 
     it 'errors if a maximum balance is reached' do
-      expect{ oystercard.top_up(Oystercard::MAX_BALANCE) }.to raise_error "Can't top_up above #{Oystercard::MAX_BALANCE}"
+      expect{ oystercard.top_up(OysterCard::MAX_BALANCE) }.to raise_error "Can't top_up above #{OysterCard::MAX_BALANCE}"
     end
   end
 
   describe '#touch_in' do
     it 'should raise an error if the card is touched in without meeting the minimum balance' do
-      expect { Oystercard.new.touch_in(station_a) }.to raise_error 'Balance below minimum'
+      expect { OysterCard.new.touch_in(station_a) }.to raise_error 'Balance below minimum'
     end
 
     it 'deducts penalty fare if forgot to #touch_out' do

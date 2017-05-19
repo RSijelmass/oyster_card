@@ -3,7 +3,7 @@ require_relative 'station'
 require_relative 'journey_log'
 
 # This maintains a balance and acts as an interface to other Class objects
-class Oystercard
+class OysterCard
   attr_reader :balance, :journey_log
 
   MIN_BALANCE = 1
