@@ -1,21 +1,31 @@
+require_relative 'journey'
+
 class JourneyLog
 
   attr_reader :journeys, :started
 
-  def initialize
+  def initialize(journey_class)
+    @journey_class = journey_class
     @journeys = []
-    @started = false
   end
 
   def start(station)
-    @journeys << Journey.new.start_journey(station)
-    @started = true
+    @current_journey = @journey_class.new.start_journey(station)
+    @journeys << @current_journey
   end
 
   def finish(station)
-    start(:no_station) unless @started
-    @journeys[-1].end_journey(station)
-    @started = false
+    current_journey
+    @current_journey.end_journey(station)
+
+  end
+
+  def calculate_fare
+    @current_journey.complete? ? Journey::MIN_FARE : Journey::PENALTY_FARE
+  end
+
+  def current_journey
+    @current_journey ||= @journey_class.new
   end
 
 end

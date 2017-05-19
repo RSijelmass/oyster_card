@@ -59,20 +59,6 @@ describe Oystercard do
       expect{oystercard.touch_out(station)}.to change { oystercard.balance }.by -1
     end
 
-    it 'updates journeys with correct exit_station when card is touched out' do
-      oystercard.top_up(FakeFare::MIN_FARE)
-      station1 = Station.new("Liverpool Street",1)
-      oystercard.touch_in(station1)
-      station2 = Station.new("Acton",4)
-      oystercard.touch_out(station2)
-      expect(oystercard.journey_log.journeys[-1].exit_station).to eq station2
-    end
-
-    it "forgetting to touch in, #touch_out creates a new journey" do
-      oystercard.touch_out(station)
-      expect(oystercard.journey_log.journeys).not_to be_empty
-    end
-
   end
 
 end
