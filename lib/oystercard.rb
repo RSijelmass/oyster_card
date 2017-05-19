@@ -67,3 +67,4 @@ card.touch_in('A')
 puts card.balance
 card.touch_out('B')
 puts card.balance
+print card.journey_log.journeys

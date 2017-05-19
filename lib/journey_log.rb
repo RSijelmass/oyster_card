@@ -2,7 +2,7 @@ require_relative 'journey'
 
 class JourneyLog
 
-  attr_reader :journeys, :started
+  attr_reader :started
 
   def initialize(journey_class)
     @journey_class = journey_class
@@ -25,6 +25,10 @@ class JourneyLog
 
   def calculate_fare
     @current_journey.complete? ? Journey::MIN_FARE : Journey::PENALTY_FARE
+  end
+
+  def journeys
+    @journeys.dup
   end
 
 end
