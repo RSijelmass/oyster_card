@@ -1,6 +1,19 @@
 require_relative 'station'
 require_relative 'journey_log'
 
+# Oystercard Class info...
+
+# Behaviour:
+# - touch_in
+# - touch_out
+# - top_up
+# - deduct
+
+# State
+# - Balance
+# - JourneyLog
+# - Minimum balance constant
+# - Maximum balance constant
 class Oystercard
 
   attr_reader :balance, :journey_log
@@ -19,7 +32,7 @@ class Oystercard
   end
 
   def touch_in(station)
-    # deduct_fare() TODO: decide how to gather fare information
+    deduct_fare(@journey_log.calculate_fare) if @journey_log.started
     check_minimum_balance
     @journey_log.start(station)
     self
@@ -27,7 +40,7 @@ class Oystercard
 
   def touch_out(station)
     @journey_log.finish(station)
-    # deduct_fare() TODO: decide how to gather fare information
+    deduct_fare(@journey_log.calculate_fare)
     self
   end
 
@@ -48,15 +61,9 @@ class Oystercard
 end
 
 card = Oystercard.new(20)
+
+puts card.balance
 card.touch_in('A')
+puts card.balance
 card.touch_out('B')
 puts card.balance
-log = card.journey_log
-p log.journeys
-
-card.touch_in'C'
-card.touch_out'D'
-
-card.touch_out'E'
-
-p log.journeys

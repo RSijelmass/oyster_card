@@ -20,7 +20,7 @@ class Journey
   end
 
   def complete?
-    @entry_station != :no_station && @exit_station != :no_station
+    !@entry_station.nil? && !@exit_station.nil?
   end
 
 end
